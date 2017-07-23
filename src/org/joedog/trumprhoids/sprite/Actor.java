@@ -1,0 +1,169 @@
+package org.joedog.trumprhoids.sprite;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.net.URL;
+import java.io.IOException;
+
+import javax.swing.JPanel;
+import javax.imageio.ImageIO;
+
+
+import org.joedog.trumprhoids.model.Arena;
+import org.joedog.trumprhoids.model.Location;
+
+public class Actor {
+  public static final int SPACESHIP = 0;
+  public static final int ASTEROID  = 1;
+  public static final int TRUMP     = 2;
+  protected int      x;
+  protected int      y;
+  protected int      width; 
+  protected int      height;
+  private   int      dw;
+  private   int      dh;
+  private   int      ypad;
+  private   int      type;
+  private   double   angle      = 0;
+  private   String   name       = null;
+  private   String   url        = null;
+  private   Arena    arena      = null; 
+  private   Location location   = new Location(0, 0);
+  private   BufferedImage image = null;
+
+  public Actor() {
+
+  }
+
+  public Actor(String url) {
+    this.url    = url;
+    this.image  = loadImage(this.url);
+    this.width  = this.image.getWidth();
+    this.height = this.image.getHeight();
+    this.dw     = this.width;
+    this.dh     = this.height;
+  }
+
+  public Actor(int width, int height) {
+    this.width  = width;
+    this.dw     = width;
+    this.height = height;
+    this.dh     = height;
+  }
+
+  public void rotate(double angle) {
+    double tmp = this.angle;
+    this.angle += angle;
+    if (this.angle > 360) {
+      this.angle = 0.0;  
+    }
+    if (this.angle < 0) {
+      this.angle += (360+this.angle);
+    }
+    System.out.printf("Original: %.2f, New: %.2f\n", tmp, this.angle);
+  }
+
+  public void setAngle(double angle) {
+    this.angle = angle;
+  }
+
+  public double getAngle() {
+    return this.angle;
+  }
+
+  public void setType(int type) {
+    this.type   = type;
+  }
+
+  public int getType() {
+    return this.type;
+  }
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public String getName() {
+    return this.name;
+  }
+
+  public void setImageUrl(String url) {
+    this.url   = url;
+    this.image = loadImage(this.url);
+  }
+
+  public void setWidth(int width) {
+    this.width = width;
+  }
+
+  public void resetWidth() {
+    this.width = this.dw;
+  }
+
+  public int getWidth() {
+    return this.width;
+  }
+
+  public void setHeight(int height) {
+    this.height = height;
+  }
+
+  public void resetHeight() {
+    this.height = dh;
+  }
+
+  public int getHeight() {
+    return this.height;
+  }
+
+  public Location getLocation() {
+    return this.location;
+  }
+
+  public int getX() {
+    return this.location.getX();
+  }
+
+  public int getY() {
+    return this.location.getY();
+  }
+
+  public synchronized void setX(int x) {
+    this.location.setX(x);
+  }
+
+  public synchronized void setY(int y) {
+    this.location.setY(y);
+  }
+
+  public synchronized void setLocation(int x, int y) {
+    this.location.setX(x);
+    this.location.setY(y);
+  }
+
+  public synchronized void setLocation(Location location) {
+    if (location == null) {
+      // WTF?
+      return;
+    }
+    this.location.setX(location.getX());
+    this.location.setY(location.getY());
+  }
+
+  public BufferedImage getImage() {
+    return this.image;
+  }
+
+  private BufferedImage loadImage(String path) {
+    BufferedImage img = null;
+    URL url = getClass().getResource(path);
+    try {
+      img = ImageIO.read(url);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    return img;
+  }
+}
