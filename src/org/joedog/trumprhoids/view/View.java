@@ -33,6 +33,19 @@ public class View extends JPanel implements Viewable {
   private BufferedImage stars   = null;
   private BufferedImage clone   = null;
   private Spaceship     ship    = new Spaceship();
+  private double mHorz;
+  private double nHorz;
+  private double mVert;
+  private double nVert;
+
+/*
+  this.mHorz = (double)(this.gameGrid.getNbHorzPix() - 1) / (xmax - xmin);
+  this.nHorz = (- this.mHorz) * xmin;
+  this.mVert = (double)(this.gameGrid.getNbVertPix() - 1) / (ymin - ymax);
+  this.nVert = (- this.mVert) * ymax;
+  this.mHorz   = (double)(control.getModelProperty("Width") - 1); 
+*/
+
 
   public View(Game control) {
     this.control = control;
@@ -52,6 +65,8 @@ public class View extends JPanel implements Viewable {
   @Override
   public void paintComponent(Graphics g) {
     super.paintComponent(g);
+    int width     = (int)control.getModelProperty("Width");  
+    int height    = (int)control.getModelProperty("Height");
     Graphics2D g2 = (Graphics2D) g;
     g2.drawImage(this.stars, 0, 0, this);
     ArrayList<Actor> actors = (ArrayList<Actor>)control.getModelProperty("Actors");
@@ -65,12 +80,18 @@ public class View extends JPanel implements Viewable {
           g2.drawImage(img, actor.getX(), actor.getY(), this);
         } else {
           g2.drawImage(actor.getImage(), actor.getX(), actor.getY(), this);
-          System.out.printf("Asteroid: %d x %d\n", actor.getX(), actor.getY());
-          actor.setLocation(actor.getX(), actor.getY()+1);
+          if (actor.getY()+1 > height) {
+            actor.setLocation(actor.getX(), -64);
+          }
+          actor.move();
         }
       }
     }
   }
+
+  /*public int toPixelX(int x) {
+
+  }*/
 
   public BufferedImage rotate(BufferedImage image, double angle) {
     double sin = Math.abs(Math.sin(Math.toRadians(angle)));

@@ -32,6 +32,8 @@ public class Arena extends AbstractModel {
   private int    rows;
   private int    width;
   private int    height;
+  private int    count;
+  private int    depth;
   private int    csize;
   private int    lives;
   private Actor  ship; 
@@ -42,11 +44,13 @@ public class Arena extends AbstractModel {
   private ArrayList<Actor> actors = new ArrayList<Actor>(); 
 
   private Arena() {
-    this.width  = 900;
-    this.height = 600;
-    this.csize  = (this.width  / 32);
-    this.cols   = (this.width  / this.csize);
-    this.rows   = (this.height / this.csize);
+    this.width  = 1000;
+    this.height = 660;
+    this.csize  = 64;
+    this.count  = (this.width  / this.csize);
+    this.depth  = (this.height / this.csize);
+    this.cols   = (this.width  / this.count);
+    this.rows   = (this.height / this.count);
   }
 
   public synchronized static Arena getInstance() {
@@ -68,9 +72,9 @@ public class Arena extends AbstractModel {
     Asteroid a = new Asteroid();
     Boulder  b = new Boulder();
     Rock     c = new Rock();
-    a.setLocation(new Location(25, 25));
-    b.setLocation(new Location(500, 50));
-    c.setLocation(new Location(175, 75));
+    a.setLocation(new Location(25, 220));
+    b.setLocation(new Location(500, 250));
+    c.setLocation(new Location(175, 275));
     this.ship.setLocation(new Location(450, 300));
     this.actors.add(a);
     this.actors.add(b);
@@ -105,6 +109,28 @@ public class Arena extends AbstractModel {
    */
   public String getMessage() {
     return this.message;
+  }
+
+  /**
+   * Returns the count of squares in the width
+   * of the grid.
+   * <p>
+   * @param  none
+   * @return int
+   */
+  public int getCount() {
+    return this.count;
+  }
+
+  /**
+   * Returns the number of squares in the depth
+   * (height) of the grid.
+   * <p>
+   * @param  none
+   * @return int
+   */
+  public int getDepth() {
+    return this.depth;
   }
 
   /**

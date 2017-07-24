@@ -32,8 +32,8 @@ public class Main  extends JPanel implements KeyListener {
     view.setFocusable(true);
     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     frame.setContentPane(panel);
-    frame.setPreferredSize(new Dimension(900, 600));
-    frame.setSize(900, 600);
+    frame.setPreferredSize(new Dimension(1000, 660)); // XXX: need this set by model
+    frame.setSize(1000, 660);
     frame.pack();
     frame.setLocation(10, 10);
     frame.setVisible(true);

@@ -18,19 +18,20 @@ public class Actor {
   public static final int SPACESHIP = 0;
   public static final int ASTEROID  = 1;
   public static final int TRUMP     = 2;
-  protected int      x;
-  protected int      y;
   protected int      width; 
   protected int      height;
   private   int      dw;
   private   int      dh;
   private   int      ypad;
   private   int      type;
-  private   double   angle      = 0;
   private   String   name       = null;
   private   String   url        = null;
   private   Arena    arena      = null; 
   private   Location location   = new Location(0, 0);
+  private   int      direction  = Location.SOUTH;
+  private   int      speed      = 1;
+  private   int      strafe     = 1;
+  private   double   angle      = 0.0;
   private   BufferedImage image = null;
 
   public Actor() {
@@ -53,6 +54,14 @@ public class Actor {
     this.dh     = height;
   }
 
+  public void move() {
+    int x = this.location.getX();
+    int y = this.location.getY();
+    x +=  Math.cos(this.direction) * this.speed  + Math.sin(this.direction) * this.strafe;
+    y -= -Math.cos(this.direction) * this.strafe + Math.sin(this.direction) * this.speed;
+    this.setLocation(x, y);
+  }
+
   public void rotate(double angle) {
     double tmp = this.angle;
     this.angle += angle;
@@ -62,7 +71,14 @@ public class Actor {
     if (this.angle < 0) {
       this.angle += (360+this.angle);
     }
-    System.out.printf("Original: %.2f, New: %.2f\n", tmp, this.angle);
+  }
+
+  public void setDirection(int direction) {
+    this.direction = direction;
+  }
+
+  public double getDirection() {
+    return this.direction;
   }
 
   public void setAngle(double angle) {
