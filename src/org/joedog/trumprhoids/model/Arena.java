@@ -70,8 +70,8 @@ public class Arena extends AbstractModel {
     this.lives = 3;
     this.ship  = new Spaceship();
     Asteroid a = new Asteroid();
-    Boulder  b = new Boulder();
-    Rock     c = new Rock();
+    Asteroid b = new Asteroid();
+    Asteroid c = new Asteroid();
     a.setLocation(new Location(25, 220));
     b.setLocation(new Location(500, 250));
     c.setLocation(new Location(175, 275));
