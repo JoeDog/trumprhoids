@@ -32,14 +32,14 @@ public class Location implements Comparable, Cloneable {
   private boolean highlight = false;
 
   public static final int FORWARD     = 0;
-  public static final int EAST        = 120; // GOOD
-  public static final int SOUTHEAST   = 270; // GOOD
-  public static final int SOUTH       = 320; // GOOD
-  public static final int SOUTHWEST   = 30;  // GOOD
-  public static final int WEST        = 180; // GOOD
-  public static final int NORTHWEST   = 135; // GOOD
-  public static final int NORTH       = 90;  // GOOD 
-  public static final int NORTHEAST   = 315; // GOOD
+  public static final int NORTH       = 90;   
+  public static final int NORTHEAST   = 315; 
+  public static final int EAST        = 120; 
+  public static final int SOUTHEAST   = 270; 
+  public static final int SOUTH       = 320; 
+  public static final int SOUTHWEST   = 30;  
+  public static final int WEST        = 180; 
+  public static final int NORTHWEST   = 135; 
   public static final int RIGHT       = 90;
   public static final int LEFT        = -90;
   public static final int HALF_RIGHT  = 45;
