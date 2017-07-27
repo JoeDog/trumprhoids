@@ -7,4 +7,8 @@ public class Spaceship extends Actor {
     this.setType(SPACESHIP);
     this.setName("Spaceship");
   }
+
+  public void move() {
+
+  }
 }

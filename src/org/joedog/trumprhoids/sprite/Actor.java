@@ -2,6 +2,7 @@ package org.joedog.trumprhoids.sprite;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.net.URL;
@@ -10,29 +11,28 @@ import java.io.IOException;
 import javax.swing.JPanel;
 import javax.imageio.ImageIO;
 
-
-import org.joedog.trumprhoids.model.Arena;
 import org.joedog.trumprhoids.model.Location;
+import org.joedog.trumprhoids.model.Direction;
 
-public class Actor {
+public abstract class Actor {
   public static final int SPACESHIP = 0;
   public static final int ASTEROID  = 1;
   public static final int TRUMP     = 2;
-  protected int      width; 
-  protected int      height;
-  private   int      dw;
-  private   int      dh;
-  private   int      ypad;
-  private   int      type;
-  private   String   name       = null;
-  private   String   url        = null;
-  private   Arena    arena      = null; 
-  private   Location location   = new Location(0, 0);
-  private   int      direction  = Location.SOUTH;
-  private   int      speed      = 1;
-  private   int      strafe     = 1;
-  private   double   angle      = 0.0;
-  private   BufferedImage image = null;
+  public static final int PHOTON    = 3;
+  protected int       width; 
+  protected int       height;
+  private   int       dw;
+  private   int       dh;
+  private   int       ypad;
+  private   int       type;
+  private   String    name       = null;
+  private   String    url        = null;
+  protected Location  location   = new Location(0, 0);
+  protected Direction direction  = new Direction(Location.NORTHWEST);
+  protected int       speed      = 1;
+  protected int       strafe     = 1;
+  protected double    angle      = 0.0;
+  private   BufferedImage image  = null;
 
   public Actor() {
 
@@ -54,14 +54,6 @@ public class Actor {
     this.dh     = height;
   }
 
-  public void move() {
-    int x = this.location.getX();
-    int y = this.location.getY();
-    x +=  Math.cos(this.direction) * this.speed  + Math.sin(this.direction) * this.strafe;
-    y -= -Math.cos(this.direction) * this.strafe + Math.sin(this.direction) * this.speed;
-    this.setLocation(x, y);
-  }
-
   public void rotate(double angle) {
     double tmp = this.angle;
     this.angle += angle;
@@ -74,11 +66,11 @@ public class Actor {
   }
 
   public void setDirection(int direction) {
-    this.direction = direction;
+    this.direction.set(direction);
   }
 
   public double getDirection() {
-    return this.direction;
+    return this.direction.get();
   }
 
   public void setAngle(double angle) {
@@ -91,6 +83,16 @@ public class Actor {
 
   public void setType(int type) {
     this.type   = type;
+  }
+
+  public void setSpeed(int speed) {
+    this.speed  = speed;
+    this.strafe = speed;
+  }
+
+  public void setSpeed(int speed, int strafe) {
+    this.speed  = speed;
+    this.strafe = strafe;
   }
 
   public int getType() {
@@ -168,9 +170,48 @@ public class Actor {
     this.location.setY(location.getY());
   }
 
-  public BufferedImage getImage() {
+  /*public BufferedImage getImage() {
     return this.image;
+  }*/
+
+  public BufferedImage getImage() {  
+    int w = this.image.getWidth();  
+    int h = this.image.getHeight();  
+    int d = 0;
+    BufferedImage newImage = new BufferedImage(width, height, this.image.getType());
+    Graphics2D g2 = newImage.createGraphics();
+    switch (this.direction.get()) {
+      case Location.NORTH: 
+        d = 0;
+        break;
+      case Location.NORTHEAST: 
+        d = 45;
+        break;
+      case Location.EAST:
+        d = 90;
+        break;
+      case Location.SOUTHEAST: 
+        d = 135;
+        break;
+      case Location.SOUTH: 
+        d = 180;
+        break;
+      case Location.SOUTHWEST: 
+        d = 225;
+        break;
+      case Location.WEST: 
+        d = 270;
+        break;
+      case Location.NORTHWEST: 
+        d = 315;
+        break;
+    }
+    g2.rotate(Math.toRadians(d), w/2, h/2);  
+    g2.drawImage(this.image,null,0,0);
+    return newImage;  
   }
+
+  public abstract void move();
 
   private BufferedImage loadImage(String path) {
     BufferedImage img = null;
