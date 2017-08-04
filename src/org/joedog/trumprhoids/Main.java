@@ -13,6 +13,7 @@ import javax.swing.SwingUtilities;
 
 import org.joedog.trumprhoids.view.*;
 import org.joedog.trumprhoids.control.*;
+import org.joedog.trumprhoids.model.Direction;
 
 public class Main  extends JPanel implements KeyListener {
   private static final  long serialVersionUID = -2666347118493388423L;
@@ -42,12 +43,14 @@ public class Main  extends JPanel implements KeyListener {
   public void keyPressed(KeyEvent e) { }
   public void keyReleased(KeyEvent e) { }
   public void keyTyped(KeyEvent e) {
-    System.out.println(e.getKeyChar());  
     if (e.getKeyChar() == 'j') {
-      control.rotate(-3.25);
+      control.rotate(Direction.LEFT);
     }
     if (e.getKeyChar() == 'l') {
-      control.rotate(3.25);
+      control.rotate(Direction.RIGHT);
+    }
+    if (e.getKeyChar() == ' ') {
+      control.shoot();
     }
   }
  
