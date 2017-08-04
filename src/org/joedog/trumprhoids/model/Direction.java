@@ -1,12 +1,27 @@
 package org.joedog.trumprhoids.model;
 
 public class Direction {
+  public static final int NORTH       = 90;
+  public static final int NORTHEAST   = 315;
+  public static final int EAST        = 120;
+  public static final int SOUTHEAST   = 270;
+  public static final int SOUTH       = 320;
+  public static final int SOUTHWEST   = 30;
+  public static final int WEST        = 180;
+  public static final int NORTHWEST   = 135;
+  public static final int RIGHT       = 90;
+  public static final int LEFT        = -90;
+  public static final int HALF_RIGHT  = 45;
+  public static final int HALF_LEFT   = -45;
+  public static final int FULL_CIRCLE = 360;
+  public static final int FORWARD     = 0;
+
   private int  size   = 0;
   private int  index  = 0;
   private int  list[] = new int[] {
-    Location.NORTH, Location.NORTHEAST, Location.EAST, Location.SOUTHEAST, 
-    Location.SOUTH, Location.SOUTHWEST, Location.WEST, Location.NORTHWEST 
-  }; 
+    NORTH, NORTHEAST, EAST, SOUTHEAST,
+    SOUTH, SOUTHWEST, WEST, NORTHWEST
+  };
 
   public Direction() {
   }
@@ -45,13 +60,5 @@ public class Direction {
 
   public int getSize(){
     return size;
-  }
-}
-
-class Node {
-  int  data;
-  Node next;
-  public Node(int data){
-    this.data = data;
   }
 }
