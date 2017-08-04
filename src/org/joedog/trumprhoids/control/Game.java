@@ -14,9 +14,14 @@ public class Game extends AbstractController {
     this.runModelMethod("newGame");
   }
 
-  public void rotate(double angle) {
-    this.arena.rotate(angle);
+   public void rotate(int direction) {
+    this.arena.rotate(direction);
   }
+
+  public void shoot() {
+    this.arena.shoot();
+  }
+
 
   public void setEngine(Engine engine) {
     this.engine = engine;
