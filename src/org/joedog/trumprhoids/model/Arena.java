@@ -82,8 +82,16 @@ public class Arena extends AbstractModel {
     this.actors.add(ship);
   }
 
-  public synchronized void rotate(double angle) {
-    this.ship.rotate(angle);
+  public synchronized void shoot() {
+    int x = this.ship.getX()+(this.ship.getWidth()/2);
+    int y = this.ship.getY()+(this.ship.getHeight()/2);
+    int d = this.ship.getDirection();
+    Photon p = new Photon(x, y, d);
+    this.actors.add(p);
+  }
+
+  public synchronized void rotate(int direction) {
+    this.ship.rotate(direction);
   }
 
   public ArrayList<Actor> getActors() {
