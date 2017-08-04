@@ -28,7 +28,7 @@ public abstract class Actor {
   private   String    name       = null;
   private   String    url        = null;
   protected Location  location   = new Location(0, 0);
-  protected Direction direction  = new Direction(Location.NORTHWEST);
+  protected Direction direction  = new Direction(Direction.NORTH);
   protected int       speed      = 1;
   protected int       strafe     = 1;
   protected double    angle      = 0.0;
@@ -54,14 +54,12 @@ public abstract class Actor {
     this.dh     = height;
   }
 
-  public void rotate(double angle) {
-    double tmp = this.angle;
-    this.angle += angle;
-    if (this.angle > 360) {
-      this.angle = 0.0;  
+  public void rotate(int direction) {
+    if (direction == Direction.RIGHT) {
+      this.direction.increment();
     }
-    if (this.angle < 0) {
-      this.angle += (360+this.angle);
+    if (direction == Direction.LEFT) {
+      this.direction.decrement();
     }
   }
 
@@ -69,7 +67,7 @@ public abstract class Actor {
     this.direction.set(direction);
   }
 
-  public double getDirection() {
+  public int getDirection() {
     return this.direction.get();
   }
 
@@ -174,41 +172,41 @@ public abstract class Actor {
     return this.image;
   }*/
 
-  public BufferedImage getImage() {  
-    int w = this.image.getWidth();  
-    int h = this.image.getHeight();  
+  public BufferedImage getImage() {
+    int w = this.image.getWidth();
+    int h = this.image.getHeight();
     int d = 0;
     BufferedImage newImage = new BufferedImage(width, height, this.image.getType());
     Graphics2D g2 = newImage.createGraphics();
     switch (this.direction.get()) {
-      case Location.NORTH: 
+      case Direction.NORTH:
         d = 0;
         break;
-      case Location.NORTHEAST: 
+      case Direction.NORTHEAST:
         d = 45;
         break;
-      case Location.EAST:
+      case Direction.EAST:
         d = 90;
         break;
-      case Location.SOUTHEAST: 
+      case Direction.SOUTHEAST:
         d = 135;
         break;
-      case Location.SOUTH: 
+      case Direction.SOUTH:
         d = 180;
         break;
-      case Location.SOUTHWEST: 
+      case Direction.SOUTHWEST:
         d = 225;
         break;
-      case Location.WEST: 
+      case Direction.WEST:
         d = 270;
         break;
-      case Location.NORTHWEST: 
+      case Direction.NORTHWEST:
         d = 315;
         break;
     }
-    g2.rotate(Math.toRadians(d), w/2, h/2);  
+    g2.rotate(Math.toRadians(d), w/2, h/2);
     g2.drawImage(this.image,null,0,0);
-    return newImage;  
+    return newImage;
   }
 
   public abstract void move();
